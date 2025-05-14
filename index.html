@@ -111,13 +111,21 @@ body {
 .eye {
   width: 24px;
   height: 24px;
-  background: white;
-  border: 3px solid black;
+  background: white !important;
+  border: 3px solid black !important;
   border-radius: 50%;
   position: absolute;
   top: 35px;
   overflow: hidden;
 }
+
+@media (prefers-color-scheme: dark) {
+  .eye {
+    background: white !important;   /* Stay visible on black backgrounds */
+    border: 3px solid black !important;
+  }
+}
+
 
 
     .eye.left {
@@ -258,12 +266,7 @@ body {
       opacity: 1;
       transform: translateY(0);
     }
-    @media (prefers-color-scheme: dark) {
-  .eye {
-    background: black;
-    border: 3px solid white;
-  }
-}
+   
 
   </style>
 </head>
