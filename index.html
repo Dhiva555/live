@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Biru | Sign</title>
    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+  <script>
+document.body.classList.toggle('night-mode');
+</script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -94,8 +96,17 @@ body {
       box-shadow: 0 5px 15px rgb(158 173 194);
       animation: bounce 2s infinite ease-in-out;
     }
+:root {
+  --eye-bg: white;
+  --eye-border: black;
+}
 
-    .eye {
+body.night-mode {
+  --eye-bg: black;
+  --eye-border: white;
+}
+
+   /* .eye {
       width: 24px;
       height: 24px;
       background: #fff;
@@ -104,7 +115,18 @@ body {
       position: absolute;
       top: 35px;
       overflow: hidden;
-    }
+    }*/
+.eye {
+  width: 24px;
+  height: 24px;
+  background: var(--eye-bg);
+  border: 3px solid var(--eye-border);
+  border-radius: 50%;
+  position: absolute;
+  top: 35px;
+  overflow: hidden;
+}
+
 
     .eye.left {
       left: 30px;
