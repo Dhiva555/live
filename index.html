@@ -48,32 +48,73 @@
       transition: all 0.6s ease-in-out;
     }
 
-    .animal-face {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 20px auto;
-      background: #fff;
-      border-radius: 50%;
-      position: relative;
-    }
+   .animal-face {
+  width: 120px;
+  height: 140px; /* increased from 120px to 140px */
+  background: #fff;
+  border-radius: 50%;
+  margin: 0 auto 20px auto;
+  position: relative;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
 
-    .eye {
-      width: 20px;
-      height: 20px;
-      background: black;
-      border-radius: 50%;
-      position: absolute;
-      top: 30px;
-      transition: 0.1s;
-    }
 
-    .eye.left {
-      left: 25px;
-    }
+/* Eyes */
+.eye {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 3px solid black;
+  border-radius: 50%;
+  position: absolute;
+  top: 30px;
+}
 
-    .eye.right {
-      right: 25px;
-    }
+.eye::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+}
+
+.eye.left {
+  left: 25px;
+}
+
+.eye.right {
+  right: 25px;
+}
+
+/* Nose */
+.nose {
+  width: 10px;
+  height: 10px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Mouth (smile) */
+.mouth {
+  width: 40px;
+  height: 20px;
+  border: 3px solid black;
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  position: absolute;
+  top: 90px; /* 👈 replaced bottom with top */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
 
     h2 {
       margin-bottom: 20px;
@@ -156,9 +197,12 @@
 
   <div class="container">
     <div class="animal-face">
-      <div class="eye left"></div>
-      <div class="eye right"></div>
-    </div>
+  <div class="eye left"></div>
+  <div class="eye right"></div>
+  <div class="nose"></div>
+  <div class="mouth"></div>
+</div>
+
 
     <div id="signin-form" class="form-container active">
       <h2>Sign In</h2>
