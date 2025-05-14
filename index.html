@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sign In / Sign Up</title>
+  <title>Interactive Sign In / Sign Up</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
     }
+
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
@@ -17,39 +18,96 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+      transition: background 0.3s ease;
     }
+
+    .blur-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
     .container {
+      position: relative;
+      z-index: 11;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 15px;
       backdrop-filter: blur(15px);
       box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-      width: 90%;
-      max-width: 400px;
+      width: 350px;
       padding: 40px;
       color: white;
-    }
-    h2 {
       text-align: center;
+      transition: all 0.6s ease-in-out;
+    }
+
+    .animal-face {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px auto;
+      background: #fff;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .eye {
+      width: 20px;
+      height: 20px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      top: 30px;
+      transition: 0.1s;
+    }
+
+    .eye.left {
+      left: 25px;
+    }
+
+    .eye.right {
+      right: 25px;
+    }
+
+    h2 {
       margin-bottom: 20px;
       font-weight: 600;
     }
+
     input[type="text"], input[type="password"], input[type="email"] {
       width: 100%;
-      padding: 12px 15px;
+      padding: 12px;
       margin: 10px 0;
       border: none;
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.2);
       color: white;
       font-size: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 12;
     }
+
+    input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+    }
+
     input::placeholder {
       color: rgba(255, 255, 255, 0.7);
     }
+
     button {
       width: 100%;
       padding: 12px;
-      background: #ffffff;
+      background: #fff;
       color: #764ba2;
       font-size: 16px;
       font-weight: 600;
@@ -57,15 +115,20 @@
       border-radius: 8px;
       margin-top: 20px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.4s ease;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
     }
+
     button:hover {
-      background: #eeeeee;
+      background: #ffdbf2;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
     }
+
     .toggle {
-      text-align: center;
       margin-top: 20px;
     }
+
     .toggle a {
       color: #fff;
       font-weight: 600;
@@ -75,21 +138,33 @@
 
     .form-container {
       display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease-in-out;
     }
 
     .form-container.active {
       display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
 
+  <div class="blur-overlay" id="blurOverlay"></div>
+
   <div class="container">
+    <div class="animal-face">
+      <div class="eye left"></div>
+      <div class="eye right"></div>
+    </div>
+
     <div id="signin-form" class="form-container active">
       <h2>Sign In</h2>
       <input type="email" placeholder="Email" required>
       <input type="password" placeholder="Password" required>
-      <button>Sign In</button>
+      <button onclick="formEffect()">Sign In</button>
       <div class="toggle">
         New here? <a onclick="toggleForm()">Create an account</a>
       </div>
@@ -97,10 +172,10 @@
 
     <div id="signup-form" class="form-container">
       <h2>Sign Up</h2>
-      <input type="text" placeholder="Full Name" required>
+      <input type="text" placeholder="Full Name" id="fullName" required>
       <input type="email" placeholder="Email" required>
       <input type="password" placeholder="Password" required>
-      <button>Sign Up</button>
+      <button onclick="formEffect()">Sign Up</button>
       <div class="toggle">
         Already have an account? <a onclick="toggleForm()">Sign in</a>
       </div>
@@ -112,6 +187,37 @@
       document.getElementById("signin-form").classList.toggle("active");
       document.getElementById("signup-form").classList.toggle("active");
     }
+
+    function formEffect() {
+      const container = document.querySelector(".container");
+      container.style.transform = "scale(0.98)";
+      setTimeout(() => {
+        container.style.transform = "scale(1)";
+      }, 200);
+    }
+
+    // Eye tracking
+    const eyes = document.querySelectorAll('.eye');
+    document.addEventListener('mousemove', (e) => {
+      eyes.forEach(eye => {
+        const box = eye.getBoundingClientRect();
+        const x = (e.clientX - box.left - eye.clientWidth / 2) / 15;
+        const y = (e.clientY - box.top - eye.clientHeight / 2) / 15;
+        eye.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+
+    // Focus effect for Full Name
+    const fullNameInput = document.getElementById('fullName');
+    const blurOverlay = document.getElementById('blurOverlay');
+
+    fullNameInput.addEventListener('focus', () => {
+      blurOverlay.style.opacity = '1';
+    });
+
+    fullNameInput.addEventListener('blur', () => {
+      blurOverlay.style.opacity = '0';
+    });
   </script>
 </body>
 </html>
