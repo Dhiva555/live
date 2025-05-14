@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Interactive Sign In / Sign Up</title>
+  <title>Biru | Sign</title>
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -11,23 +14,27 @@
     }
 
     body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      transition: background 0.3s ease;
-    }
+  background-image: url('https://static.vecteezy.com/system/resources/previews/023/460/354/large_2x/happy-birthday-background-with-balloons-illustration-ai-generative-free-photo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: background 0.2s ease;
+}
+
 
     .blur-overlay {
       position: absolute;
       width: 100%;
       height: 100%;
       backdrop-filter: blur(4px);
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.2);
       z-index: 10;
       opacity: 0;
       pointer-events: none;
@@ -47,74 +54,118 @@
       text-align: center;
       transition: all 0.6s ease-in-out;
     }
-
-   .animal-face {
-  width: 120px;
-  height: 140px; /* increased from 120px to 140px */
-  background: #fff;
-  border-radius: 50%;
-  margin: 0 auto 20px auto;
-  position: relative;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
-}
-
-
-/* Eyes */
-.eye {
+.kombu-horn {
   width: 20px;
-  height: 20px;
-  background: white;
-  border: 3px solid black;
-  border-radius: 50%;
+  height: 50px;
+  background: linear-gradient(to top, #ffb3b3, #ff2929);
+  border-radius: 10px 10px 0 0;
   position: absolute;
-  top: 30px;
+  top: -25px;
+  transform: rotate(-20deg);
+  animation: wiggle 2s infinite ease-in-out;
 }
 
-.eye::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  background: black;
-  border-radius: 50%;
-  position: absolute;
-  top: 6px;
-  left: 6px;
+.kombu-horn.right {
+  right: 30px;
+  transform: rotate(20deg);
 }
 
-.eye.left {
-  left: 25px;
+.kombu-horn.left {
+  left: 30px;
 }
 
-.eye.right {
-  right: 25px;
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
 }
 
-/* Nose */
-.nose {
-  width: 10px;
-  height: 10px;
-  background: black;
-  border-radius: 50%;
-  position: absolute;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-}
+    .animal-face {
+      width: 140px;
+      height: 140px;
+      /* background: #fff5f7; */
+      background: linear-gradient(to top, #ff2929, #ffcece);
+      border-radius: 50%;
+      margin: 0 auto 20px auto;
+      position: relative;
+      box-shadow: 0 5px 15px rgb(158 173 194);
+      animation: bounce 2s infinite ease-in-out;
+    }
 
-/* Mouth (smile) */
-.mouth {
-  width: 40px;
-  height: 20px;
-  border: 3px solid black;
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  position: absolute;
-  top: 90px; /* 👈 replaced bottom with top */
-  left: 50%;
-  transform: translateX(-50%);
-}
+    .eye {
+      width: 24px;
+      height: 24px;
+      background: white;
+      border: 3px solid black;
+      border-radius: 50%;
+      position: absolute;
+      top: 35px;
+      overflow: hidden;
+    }
 
+    .eye.left {
+      left: 30px;
+    }
 
+    .eye.right {
+      right: 30px;
+    }
+
+    .pupil {
+      width: 10px;
+      height: 10px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      transition: transform 0.1s ease-out;
+    }
+
+    .cheek {
+      width: 12px;
+      height: 12px;
+      background: pink;
+      border-radius: 50%;
+      position: absolute;
+      top: 65px;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .left-cheek {
+      left: 20px;
+    }
+
+    .right-cheek {
+      right: 20px;
+    }
+
+    .mouth {
+      width: 50px;
+      height: 25px;
+      border: 3px solid black;
+      border-top: none;
+      border-radius: 0 0 50px 50px;
+      position: absolute;
+      top: 85px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: smileWave 2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+
+    @keyframes smileWave {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      50% { transform: translateX(-50%) rotate(5deg); }
+    }
 
     h2 {
       margin-bottom: 20px;
@@ -197,18 +248,22 @@
 
   <div class="container">
     <div class="animal-face">
-  <div class="eye left"></div>
-  <div class="eye right"></div>
-  <div class="nose"></div>
-  <div class="mouth"></div>
-</div>
-
+        <div class="kombu-horn left"></div>
+  <div class="kombu-horn right"></div>
+      <div class="eye left"><div class="pupil"></div></div>
+      <div class="eye right"><div class="pupil"></div></div>
+      <div class="cheek left-cheek"></div>
+      <div class="cheek right-cheek"></div>
+      <div class="mouth"></div>
+    </div>
 
     <div id="signin-form" class="form-container active">
       <h2>Sign In</h2>
-      <input type="email" placeholder="Email" required>
-      <input type="password" placeholder="Password" required>
-      <button onclick="formEffect()">Sign In</button>
+      <div id="error-label" style="color: red; margin-top: 10px;"></div>
+
+      <input type="email" placeholder="Email" id="signin-email" required>
+      <input type="password" placeholder="Password" id="signin-password" required>
+      <button onclick="signIn()">Sign In</button>
       <div class="toggle">
         New here? <a onclick="toggleForm()">Create an account</a>
       </div>
@@ -216,23 +271,27 @@
 
     <div id="signup-form" class="form-container">
       <h2>Sign Up</h2>
+      <div id="error-label1" style="color: red; margin-top: 10px;"></div>
+
       <input type="text" placeholder="Full Name" id="fullName" required>
-      <input type="email" placeholder="Email" required>
-      <input type="password" placeholder="Password" required>
-      <button onclick="formEffect()">Sign Up</button>
+      <input type="email" placeholder="Email" id="email" required>
+      <input type="password" placeholder="Password" id="password" required>
+      <button onclick="signUp()">Sign Up</button>
       <div class="toggle">
         Already have an account? <a onclick="toggleForm()">Sign in</a>
       </div>
     </div>
   </div>
 
-  <script>
-    function toggleForm() {
-      document.getElementById("signin-form").classList.toggle("active");
-      document.getElementById("signup-form").classList.toggle("active");
-    }
+ 
+<script>
+  window.onload = () => {
+   const SUPABASE_URL = 'https://mraiexpiatvnlymouzaw.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1yYWlleHBpYXR2bmx5bW91emF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMjM3NzcsImV4cCI6MjA2Mjc5OTc3N30.ihOcYk5rAmcqZJpuDilFrf88HqTTgwVnjEfoYGmnuCE';
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const blurOverlay = document.getElementById('blurOverlay');
 
-    function formEffect() {
+    window.formEffect = function () {
       const container = document.querySelector(".container");
       container.style.transform = "scale(0.98)";
       setTimeout(() => {
@@ -240,28 +299,152 @@
       }, 200);
     }
 
-    // Eye tracking
-    const eyes = document.querySelectorAll('.eye');
-    document.addEventListener('mousemove', (e) => {
-      eyes.forEach(eye => {
-        const box = eye.getBoundingClientRect();
-        const x = (e.clientX - box.left - eye.clientWidth / 2) / 15;
-        const y = (e.clientY - box.top - eye.clientHeight / 2) / 15;
-        eye.style.transform = `translate(${x}px, ${y}px)`;
+
+    window.toggleForm = function () {
+  const signInForm = document.getElementById("signin-form");
+  const signUpForm = document.getElementById("signup-form");
+
+  signInForm.classList.toggle("active");
+  signUpForm.classList.toggle("active");
+
+
+  signInForm.querySelectorAll("input").forEach(input => input.value = "");
+  signUpForm.querySelectorAll("input").forEach(input => input.value = "");
+    }
+  const errorLabel = document.getElementById("error-label");
+  const errorLabel1 = document.getElementById("error-label1");
+  if (errorLabel) errorLabel.textContent = "";
+  if (errorLabel1) errorLabel1.textContent = "";
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        blurOverlay.style.opacity = '1';
+      });
+      input.addEventListener('blur', () => {
+        blurOverlay.style.opacity = '0';
       });
     });
 
-    // Focus effect for Full Name
-    const fullNameInput = document.getElementById('fullName');
-    const blurOverlay = document.getElementById('blurOverlay');
-
-    fullNameInput.addEventListener('focus', () => {
-      blurOverlay.style.opacity = '1';
+    document.addEventListener('mousemove', (e) => {
+      const pupils = document.querySelectorAll('.pupil');
+      pupils.forEach(pupil => {
+        const eye = pupil.parentElement;
+        const rect = eye.getBoundingClientRect();
+        const dx = e.clientX - (rect.left + rect.width / 2);
+        const dy = e.clientY - (rect.top + rect.height / 2);
+        const angle = Math.atan2(dy, dx);
+        const radius = 5;
+        const offsetX = Math.cos(angle) * radius;
+        const offsetY = Math.sin(angle) * radius;
+        pupil.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      });
     });
 
-    fullNameInput.addEventListener('blur', () => {
-      blurOverlay.style.opacity = '0';
-    });
-  </script>
+   function showError(formId, message) {
+  let form = document.getElementById(formId);
+let errorLabel = form.querySelector('.error-label');
+  if (!errorLabel) {
+    errorLabel = document.createElement('div');
+    errorLabel.className = 'error-label';
+    errorLabel.style.color = 'red';
+    errorLabel.style.marginTop = '10px';
+    form.appendChild(errorLabel);
+  }
+
+  errorLabel.textContent = message;
+  setTimeout(() => {
+    errorLabel.textContent = '';
+  }, 3000);
+}
+
+
+    window.signUp = async function () {
+        const button = document.querySelector('#signup-form button');
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Signing up...';
+      const nameInput = document.getElementById('fullName');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!name || !email || !password) {
+      showError('signup-form', 'All fields are required');
+       button.disabled = false;
+    button.textContent = originalText;
+
+
+        return;
+      }
+
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: name } }
+      });
+
+      if (authError) {
+        showError('signup', '❌ ' + authError.message);
+         button.disabled = false;
+    button.textContent = originalText;
+        return;
+      }
+
+      const { error } = await supabase
+        .from('userdetails')
+        .insert([{ name, email, password }]);
+ button.disabled = false;
+    button.textContent = originalText;
+      if (error) {
+        showError('signup', '❌ ' + error.message);
+         button.disabled = false;
+    button.textContent = originalText;
+      } else {
+        alert('✅ Signup successful! Check your email.');
+         nameInput.value = '';
+    emailInput.value = '';
+    passwordInput.value = '';
+    nameInput.focus();
+    toggleForm(); 
+      }
+    }
+
+    // Sign In
+    window.signIn = async function () {
+       const button = document.querySelector('#signin-form button');
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Signing in...';
+      const emailInput = document.querySelector('#signin-form input[type="email"]');
+      const passwordInput = document.querySelector('#signin-form input[type="password"]');
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+showError('signin-form', 'All fields are required');
+ button.disabled = false;
+    button.textContent = originalText;
+        return;
+      }
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+ button.disabled = false;
+    button.textContent = originalText;
+      if (error) {
+        showError('signin-form', 'Incorrect credentials');
+        emailInput.value = '';
+        passwordInput.value = '';
+      } else {
+        window.location.href = 'dashboard.html';
+      }
+    }
+  };
+</script>
+
+
 </body>
 </html>
