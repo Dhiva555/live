@@ -96,15 +96,7 @@ body {
       box-shadow: 0 5px 15px rgb(158 173 194);
       animation: bounce 2s infinite ease-in-out;
     }
-:root {
-  --eye-bg: white;
-  --eye-border: black;
-}
 
-body.night-mode {
-  --eye-bg: black;
-  --eye-border: white;
-}
 
    /* .eye {
       width: 24px;
@@ -119,8 +111,8 @@ body.night-mode {
 .eye {
   width: 24px;
   height: 24px;
-  background: var(--eye-bg);
-  border: 3px solid var(--eye-border);
+  background: white;
+  border: 3px solid black;
   border-radius: 50%;
   position: absolute;
   top: 35px;
@@ -266,6 +258,13 @@ body.night-mode {
       opacity: 1;
       transform: translateY(0);
     }
+    @media (prefers-color-scheme: dark) {
+  .eye {
+    background: black;
+    border: 3px solid white;
+  }
+}
+
   </style>
 </head>
 <body>
