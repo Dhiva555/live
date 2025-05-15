@@ -448,7 +448,18 @@ let errorLabel = form.querySelector('.error-label');
   button.textContent = originalText;
 
   if (error) {
+    if (
+    error.message.includes('duplicate key') || 
+    error.message.includes('duplicate value') || 
+    error.message.toLowerCase().includes('unique constraint')
+  ) 
+      
+    {
+    showError('signup-form', '⚠️ This email is already registered. Please sign in.');
+  }
+    else{
     showError('signup-form', '❌ ' + error.message);
+    }
   } else {
     alert('✅ Signup successful! Check your email.');
     nameInput.value = '';
