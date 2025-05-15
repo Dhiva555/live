@@ -4,6 +4,8 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="light only">
+
   <title>Biru | Sign</title>
    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
@@ -14,6 +16,7 @@ document.body.classList.toggle('night-mode');
     * {
       box-sizing: border-box;
     }
+    
 
    html {
   height: 100%;
@@ -33,7 +36,12 @@ body {
   overflow: hidden;
   transition: background 0.2s ease;
 }
-
+html, body {
+  background: white; /* optional */
+  color-scheme: only light;
+  --bg-color: white;
+  --text-color: black;
+}
 
     .blur-overlay {
       position: absolute;
@@ -111,15 +119,19 @@ body {
 .eye {
   width: 24px;
   height: 24px;
-  background: white !important;
+  background: var(--bg-color) !important;
   border: 3px solid black !important;
   border-radius: 50%;
   position: absolute;
   top: 35px;
   overflow: hidden;
+  isolation: isolate;
   
 }
-
+.eye,
+button {
+  color: var(--text-color) !important;
+}
 @media (prefers-color-scheme: dark) {
   .eye {
     background-color: white !important;
