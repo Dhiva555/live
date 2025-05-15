@@ -398,59 +398,66 @@ let errorLabel = form.querySelector('.error-label');
 }
 
 
-    window.signUp = async function () {
-        const button = document.querySelector('#signup-form button');
+ window.signUp = async function () {
+  const button = document.querySelector('#signup-form button');
   const originalText = button.textContent;
   button.disabled = true;
   button.textContent = 'Signing up...';
-      const nameInput = document.getElementById('fullName');
-      const emailInput = document.getElementById('email');
-      const passwordInput = document.getElementById('password');
 
-      const name = nameInput.value.trim();
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
+  const nameInput = document.getElementById('fullName');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
 
-      if (!name || !email || !password) {
-      showError('signup-form', 'All fields are required');
-       button.disabled = false;
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  if (!name || !email || !password) {
+    showError('signup-form', 'All fields are required');
+    button.disabled = false;
     button.textContent = originalText;
+    return;
+  }
 
+  const { data: authData, error: authError } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: 'https://live-three-bice.vercel.app/',
+      data: { full_name: name }
+    }
+  });
 
-        return;
-      }
-
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { emailRedirectTo: 'https://live-three-bice.vercel.app/', data: { full_name: name } }
-      });
-
-      if (authError) {
-        showError('signup', '❌ ' + authError.message);
-         button.disabled = false;
+  if (authError) {
+    if (authError.message.toLowerCase().includes('user already registered')) {
+      showError('signup-form', 'Email already registered. Please sign in.');
+    } else {
+      showError('signup-form', '❌ ' + authError.message);
+    }
+    button.disabled = false;
     button.textContent = originalText;
-        return;
-      }
+    return;
+  }
 
-      const { error } = await supabase
-        .from('userdetails')
-        .insert([{ name, email, password }]);
- button.disabled = false;
-    button.textContent = originalText;
-      if (error) {
-        showError('signup', '❌ ' + error.message);
-         button.disabled = false;
-    button.textContent = originalText;
-      } else {
-        alert('✅ Signup successful! Check your email.');
-         nameInput.value = '';
+  // OPTIONAL: only insert into 'userdetails' if needed for extra metadata
+  const { error } = await supabase
+    .from('userdetails')
+    .insert([{ name, email, password }]);
+
+  button.disabled = false;
+  button.textContent = originalText;
+
+  if (error) {
+    showError('signup-form', '❌ ' + error.message);
+  } else {
+    alert('✅ Signup successful! Check your email.');
+    nameInput.value = '';
     emailInput.value = '';
     passwordInput.value = '';
     nameInput.focus();
-    toggleForm(); 
-      }
-    }
+    toggleForm(); // Switch to sign-in
+  }
+};
 
     // Sign In
     window.signIn = async function () {
