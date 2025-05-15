@@ -32,7 +32,6 @@ body {
   justify-content: center;
   overflow: hidden;
   transition: background 0.2s ease;
-   color-scheme: light;
 }
 
 
@@ -112,18 +111,20 @@ body {
 .eye {
   width: 24px;
   height: 24px;
-  background: red !important;
+  background: white !important;
   border: 3px solid black !important;
   border-radius: 50%;
   position: absolute;
   top: 35px;
   overflow: hidden;
-    color-scheme: light; /* Prevent dark mode interference */
-  isolation: isolate; 
   
 }
 
-
+@media (prefers-color-scheme: dark) {
+  .eye {
+    background-color: Red; /* Reapply white explicitly */
+  }
+}
 
 
     .eye.left {
@@ -277,7 +278,7 @@ body {
         <div class="kombu-horn left"></div>
   <div class="kombu-horn right"></div>
       <div class="eye left"><div class="pupil"></div></div>
-      <div class="eye right"style="background:white !important;><div class="pupil"></div></div>
+      <div class="eye right"><div class="pupil"></div></div>
       <div class="cheek left-cheek"></div>
       <div class="cheek right-cheek"></div>
       <div class="mouth"></div>
