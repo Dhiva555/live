@@ -279,29 +279,6 @@ button {
       transform: translateY(0);
     }
    
-.password-wrapper {
-  position: relative;
-  width: 90%;
-  max-width: 400px;
-  margin: 8px auto;
-}
-
-.password-wrapper input[type="password"],
-.password-wrapper input[type="text"] {
-  width: 100%;
-  padding-right: 40px; /* space for icon */
-  box-sizing: border-box;
-}
-
-.toggle-password {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 18px;
-  color: #666;
-}
 
   </style>
 </head>
@@ -325,12 +302,7 @@ button {
       <div id="error-label" style="color: red; margin-top: 10px;"></div>
 
       <input type="email" placeholder="Email" id="signin-email" required>
-      
-      <div class="password-wrapper">
-  <input type="password" id="signin-password" placeholder="Password" required />
-  <span class="toggle-password" onclick="togglePassword('signin-password', this)">👁️</span>
-</div>
-
+      <input type="password" placeholder="Password" id="signin-password" required>
       <button onclick="signIn()">Sign In</button>
       <div class="toggle">
         New here? <a onclick="toggleForm()">Create an account</a>
@@ -343,30 +315,14 @@ button {
 
       <input type="text" placeholder="Full Name" id="fullName" required>
       <input type="email" placeholder="Email" id="email" required>
-     <div class="password-wrapper">
-  <input type="password" id="signup-password" placeholder="Password" required />
-  <span class="toggle-password" onclick="togglePassword('signup-password', this)">👁️</span>
-</div>
-
+      <input type="password" placeholder="Password" id="password" required>
       <button onclick="signUp()">Sign Up</button>
       <div class="toggle">
         Already have an account? <a onclick="toggleForm()">Sign in</a>
       </div>
     </div>
   </div>
-<script>
-  function togglePassword(inputId, iconElement) {
-  const input = document.getElementById(inputId);
-  if (input.type === "password") {
-    input.type = "text";
-    iconElement.textContent = "🙈";
-  } else {
-    input.type = "password";
-    iconElement.textContent = "👁️";
-  }
-}
 
-</script>
  
 <script>
   window.onload = () => {
