@@ -423,7 +423,7 @@ let errorLabel = form.querySelector('.error-label');
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { full_name: name } }
+        options: { emailRedirectTo: 'https://live-three-bice.vercel.app/', data: { full_name: name } }
       });
 
       if (authError) {
