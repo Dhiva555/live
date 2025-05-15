@@ -409,7 +409,7 @@ let errorLabel = form.querySelector('.error-label');
 
       const name = nameInput.value.trim();
       const email = emailInput.value.trim();
-      const password = passwordInput.value;
+      const password = passwordInput.value.trim();
 
       if (!name || !email || !password) {
       showError('signup-form', 'All fields are required');
@@ -462,7 +462,7 @@ let errorLabel = form.querySelector('.error-label');
       const passwordInput = document.querySelector('#signin-form input[type="password"]');
 
       const email = emailInput.value.trim();
-      const password = passwordInput.value;
+      const password = passwordInput.value.trim();
 
       if (!email || !password) {
 showError('signin-form', 'All fields are required');
