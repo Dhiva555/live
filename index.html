@@ -8,9 +8,9 @@
 
   <title>Biru | Sign</title>
    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
+  <!-- <script>
 document.body.classList.toggle('night-mode');
-</script>
+</script> -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -216,8 +216,8 @@ button {
       margin: 10px 0;
       border: none;
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
+      background: rgba(255, 255, 255, 0.281);
+      color: rgb(0, 0, 0);
       font-size: 16px;
       transition: all 0.3s ease;
       position: relative;
@@ -260,7 +260,7 @@ button {
     }
 
     .toggle a {
-      color: #fff;
+      color: #e7f5c6;
       font-weight: 600;
       cursor: pointer;
       text-decoration: underline;
@@ -299,19 +299,21 @@ button {
 
     <div id="signin-form" class="form-container active">
       <h2>Sign In</h2>
-      <div id="error-label" style="color: red; margin-top: 10px;"></div>
+      <div id="error-label" style="color: red; margin-top: 10px; font-size: 50px; font-weight: bold;"></div>
 
       <input type="email" placeholder="Email" id="signin-email" required>
       <input type="password" placeholder="Password" id="signin-password" required>
       <button onclick="signIn()">Sign In</button>
       <div class="toggle">
         New here? <a onclick="toggleForm()">Create an account</a>
+        <br>
+        <a href="reset-password.html">Forgot Password</a>
       </div>
     </div>
 
     <div id="signup-form" class="form-container">
       <h2>Sign Up</h2>
-      <div id="error-label1" style="color: red; margin-top: 10px;"></div>
+      <div id="error-label1" style="color: red; margin-top: 10px; font-size: 50px; font-weight: bold;"></div>
 
       <input type="text" placeholder="Full Name" id="fullName" required>
       <input type="email" placeholder="Email" id="email" required>
@@ -380,22 +382,31 @@ button {
       });
     });
 
-   function showError(formId, message) {
+  function showError(formId, message) {
   let form = document.getElementById(formId);
-let errorLabel = form.querySelector('.error-label');
+  let errorLabel = form.querySelector('.error-label');
+  
   if (!errorLabel) {
     errorLabel = document.createElement('div');
     errorLabel.className = 'error-label';
     errorLabel.style.color = 'red';
+    errorLabel.style.borderRadius = '20px';
+    errorLabel.style.padding = '5px';
     errorLabel.style.marginTop = '10px';
+    errorLabel.style.fontSize = '15px';
+    errorLabel.style.fontWeight = 'bold';
     form.appendChild(errorLabel);
   }
 
+  errorLabel.style.backgroundColor = 'white'; // always reset background
   errorLabel.textContent = message;
+
   setTimeout(() => {
     errorLabel.textContent = '';
+    errorLabel.style.backgroundColor = '#00000004';
   }, 3000);
 }
+
 
 
  window.signUp = async function () {
