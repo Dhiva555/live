@@ -299,9 +299,6 @@ button {
 
     <div id="signin-form" class="form-container active">
       <h2>Sign In</h2>
-<div id="signin-alert" style="display: none; padding: 12px 16px; margin: 12px auto; width: 90%; max-width: 400px; border-radius: 8px; font-weight: 500; text-align: center;"></div>
-
-
       <div id="error-label" style="color: red; margin-top: 10px;"></div>
 
       <input type="email" placeholder="Email" id="signin-email" required>
@@ -314,9 +311,6 @@ button {
 
     <div id="signup-form" class="form-container">
       <h2>Sign Up</h2>
-<div id="signup-alert" style="display: none; padding: 12px 16px; margin: 12px auto; width: 90%; max-width: 400px; border-radius: 8px; font-weight: 500; text-align: center;"></div>
-
-
       <div id="error-label1" style="color: red; margin-top: 10px;"></div>
 
       <input type="text" placeholder="Full Name" id="fullName" required>
@@ -370,24 +364,6 @@ button {
         blurOverlay.style.opacity = '0';
       });
     });
-function showAlert(message, type = 'error') {
-  const alertBox = document.getElementById('alert');
-  alertBox.textContent = message;
-  alertBox.style.display = 'block';
-
-  if (type === 'error') {
-    alertBox.style.backgroundColor = '#f44336'; // red
-    alertBox.style.color = 'white';
-  } else if (type === 'success') {
-    alertBox.style.backgroundColor = '#4CAF50'; // green
-    alertBox.style.color = 'white';
-  }
-
-  // Auto-hide after 4 seconds
-  setTimeout(() => {
-    alertBox.style.display = 'none';
-  }, 4000);
-}
 
     document.addEventListener('mousemove', (e) => {
       const pupils = document.querySelectorAll('.pupil');
@@ -437,7 +413,7 @@ let errorLabel = form.querySelector('.error-label');
   const password = passwordInput.value.trim();
 
   if (!name || !email || !password) {
-    showAlert('signup-form', 'All fields are required');
+    showError('signup-form', 'All fields are required');
     button.disabled = false;
     button.textContent = originalText;
     return;
@@ -454,9 +430,9 @@ let errorLabel = form.querySelector('.error-label');
 
   if (authError) {
     if (authError.message.toLowerCase().includes('user already registered')) {
-      showAlert('signup-form', 'Email already registered. Please sign in.');
+      showError('signup-form', 'Email already registered. Please sign in.');
     } else {
-      showAlert('signup-form', '❌ ' + authError.message);
+      showError('signup-form', '❌ ' + authError.message);
     }
     button.disabled = false;
     button.textContent = originalText;
@@ -479,13 +455,13 @@ let errorLabel = form.querySelector('.error-label');
   ) 
       
     {
-    showAlert('signup-form', '⚠️ This email is already registered. Please sign in.');
+    showError('signup-form', '⚠️ This email is already registered. Please sign in.');
   }
     else{
-    showAlert('signup-form', '❌ ' + error.message);
+    showError('signup-form', '❌ ' + error.message);
     }
   } else {
-    showAlert('✅ Signup successful! Check your email.');
+    alert('✅ Signup successful! Check your email.');
     nameInput.value = '';
     emailInput.value = '';
     passwordInput.value = '';
@@ -507,7 +483,7 @@ let errorLabel = form.querySelector('.error-label');
       const password = passwordInput.value.trim();
 
       if (!email || !password) {
-showAlert('signin-form', 'All fields are required');
+showError('signin-form', 'All fields are required');
  button.disabled = false;
     button.textContent = originalText;
         return;
@@ -517,7 +493,7 @@ showAlert('signin-form', 'All fields are required');
  button.disabled = false;
     button.textContent = originalText;
       if (error) {
-        showAlert('signin-form', 'Incorrect credentials');
+        showError('signin-form', 'Incorrect credentials');
         emailInput.value = '';
         passwordInput.value = '';
       } else {
