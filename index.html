@@ -495,23 +495,13 @@ alert('⚠️ This email is already registered. Please sign in.');
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
 
-      if (!email || !password) {
-showError('signin-form', 'All fields are required');
- button.disabled = false;
-    button.textContent = originalText;
-        return;
-      }
-
+      
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
  button.disabled = false;
     button.textContent = originalText;
-      if (!error) {
-        showError('signin-form', 'Incorrect credentials');
-        emailInput.value = '';
-        passwordInput.value = '';
-      } else {
+     
         window.location.href = 'dashboard.html';
-      }
+
     }
   };
 </script>
