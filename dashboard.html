@@ -1,20 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard</title>
+  <meta charset="UTF-8">
+  <title>Birthday Celebration</title>
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f3f3f3;
-      padding: 50px;
-      text-align: center;
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300&display=swap');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: linear-gradient(120deg, #ffdde1, #ee9ca7);
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
     }
+
+    .heart-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      gap: 40px;
+      z-index: 2;
+      transition: top 0.8s ease;
+    }
+
+    .heart {
+      font-size: 70px;
+      cursor: pointer;
+      animation: fallToCenter 1s ease forwards, float 3s ease-in-out infinite;
+      text-align: center;
+      opacity: 0;
+    }
+
+    .heart span {
+      display: block;
+      font-size: 16px;
+      margin-top: 8px;
+      color: #fff;
+    }
+
+    /* Staggered delays */
+    .heart:nth-child(1) { animation-delay: 0s, 1s; }
+    .heart:nth-child(2) { animation-delay: 0.4s, 1s; }
+    .heart:nth-child(3) { animation-delay: 0.8s, 1s; }
+    .heart:nth-child(4) { animation-delay: 1.2s, 1s; }
+    .heart:nth-child(5) { animation-delay: 1.6s, 1s; }
+
+    @keyframes fallToCenter {
+      0% {
+        transform: translateY(-200px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+      100% { transform: translateY(0); }
+    }
+
+    .glass-box {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      color: white;
+      font-family: 'Great Vibes', cursive;
+      font-size: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: none;
+      z-index: 1;
+      min-width: 240px;
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.4);
+    }
+
+    /* Falling Confetti */
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .heart-particle {
+      position: absolute;
+      color: rgba(255, 0, 128, 0.7);
+      animation: fall linear infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+     .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .gallery-heart {
+    width: 120px;
+    height: 110px;
+    position: relative;
+    background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+    background-size: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-heart img {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .gallery-heart img:hover {
+    transform: scale(1.8);
+    box-shadow: 0 0 15px #fff;
+    z-index: 999;
   </style>
 </head>
 <body>
-  <h1>🎉 Welcome to Your Dashboard</h1>
-  <p>You are successfully signed in.</p>
+
+  <div class="hearts" id="hearts"></div>
+
+  <div class="heart-wrapper" id="heartWrapper">
+    <div class="heart" data-name="Cake">🎂<span>Cake</span></div>
+    <div class="heart" data-name="Gifts">🎁<span>Gifts</span></div>
+    <div class="heart" data-name="Memories">📷<span>Memories</span></div>
+    <div class="heart" data-name="Wishes">🎊<span>Wishes</span></div>
+    <div class="heart" data-name="Messages">💬<span>Messages</span></div>
+  </div>
+
+  <div class="glass-box" id="infoBox">🎂 Happy Birthday 🎉</div>
+
+  <!-- Update this part inside <script> -->
+
+<script>
+  const heartWrapper = document.getElementById("heartWrapper");
+  const hearts = document.querySelectorAll(".heart");
+  const infoBox = document.getElementById("infoBox");
+
+  const galleryImages = [
+    "https://picsum.photos/id/1011/200/200",
+    "https://picsum.photos/id/1015/200/200",
+    "https://picsum.photos/id/1025/200/200",
+    "https://picsum.photos/id/1035/200/200",
+        "https://picsum.photos/id/1015/200/200",
+    "https://picsum.photos/id/1025/200/200",
+    "https://picsum.photos/id/1035/200/200",
+        "https://picsum.photos/id/1015/200/200",
+    "https://picsum.photos/id/1025/200/200",
+    "https://picsum.photos/id/1035/200/200",
+        "https://picsum.photos/id/1015/200/200",
+    "https://picsum.photos/id/1025/200/200",
+    "https://picsum.photos/id/1035/200/200",
+        "https://picsum.photos/id/1015/200/200",
+    "https://picsum.photos/id/1025/200/200",
+    "https://picsum.photos/id/1035/200/200",
+    "https://picsum.photos/id/1045/200/200"
+  ];
+
+  function showGallery() {
+    infoBox.innerHTML = `<h2 style="margin-bottom: 10px;">📷 Memories Gallery</h2><div class="gallery" id="gallery"></div>`;
+    const gallery = document.getElementById("gallery");
+
+    galleryImages.forEach(src => {
+      const heart = document.createElement("div");
+      heart.className = "gallery-heart";
+      const img = document.createElement("img");
+      img.src = src;
+      heart.appendChild(img);
+      gallery.appendChild(heart);
+    });
+  }
+
+  hearts.forEach((heart) => {
+    heart.addEventListener("click", () => {
+      const label = heart.getAttribute("data-name");
+
+      // Move hearts to top
+      heartWrapper.style.top = "10%";
+
+      // Show info box content
+      infoBox.style.display = "block";
+
+      if (label === "Memories") {
+        showGallery();
+      }else if (label === "Wishes" || label === "Messages") {
+          infoBox.innerHTML = `
+            <div style="font-size: 22px; line-height: 1.6; font-family: 'Great Vibes', cursive;">
+              🎂 Happy Birthday! 🎂<br><br>
+              May your day be filled with sweet moments, laughter, and endless joy.<br>
+              May all your dreams dance with delight and come true in the most magical ways.<br><br>
+              💖 Wishing you love, health, happiness, and a year as fabulous as you are! 💖<br><br>
+              🎈 Let the celebration begin! 🎊
+            </div>`; }
+      else {
+        infoBox.innerHTML = `🎉 ${label} Celebration 🎉`;
+      }
+    });
+  });
+
+  // Floating particles (confetti style hearts)
+  const heartsContainer = document.getElementById('hearts');
+  const heartEmoji = ['🎈','🎉','💖','🎊','💓','🎂'];
+
+  function createHeartParticle() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart-particle');
+    heart.textContent = heartEmoji[Math.floor(Math.random() * heartEmoji.length)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+    heart.style.fontSize = (20 + Math.random() * 16) + 'px';
+    heartsContainer.appendChild(heart);
+    setTimeout(() => heart.remove(), 10000);
+  }
+  
+  setInterval(createHeartParticle, 350);
+</script>
+
+
 </body>
 </html>
