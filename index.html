@@ -411,7 +411,6 @@ button {
 
 
  window.signUp = async function () {
-    window.location.href = 'dashboard.html';
   const button = document.querySelector('#signup-form button');
   const originalText = button.textContent;
   button.disabled = true;
@@ -506,7 +505,7 @@ showError('signin-form', 'All fields are required');
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
  button.disabled = false;
     button.textContent = originalText;
-      if (error) {
+      if (!error) {
         showError('signin-form', 'Incorrect credentials');
         emailInput.value = '';
         passwordInput.value = '';
